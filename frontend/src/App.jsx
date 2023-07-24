@@ -8,6 +8,7 @@ import HomeScreen from './screen/HomeScreen'
 const App = () => {
   return (
     <>
+    
     <Header/>
     <ToastContainer/>
     <Container className='my-2'>

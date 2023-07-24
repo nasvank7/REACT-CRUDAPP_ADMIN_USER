@@ -2,13 +2,51 @@ import React, { useState, useEffect } from "react";
 import {Table,FormControl} from "react-bootstrap";
 import axios from "axios";
 import {toast} from 'react-toastify'
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
+import FormContainer from "../components/FormContainer";
+import {Form} from 'react-bootstrap'
+
 function AdminHome() {
   const [users, setUsers] = useState([]);
+  const [show, setShow] = useState(false);
+  const [email,setEmail]=useState('')
+  const [name,setName]=useState('')
+  const [id,setId]=useState('')
   const [searchUser,setSearchTerm]=useState('')
   const [showDelete, setShowDelete] = useState({});
+  const handleClose = () => setShow(false);
+  const submitHandler = (e) => {
+    e.preventDefault()
+    console.log('sdjfjh');
+    axios.put(`/api/admin/update/${id}`,{name:name,email:email}).then((res)=>{
+      setId("")
+      setName("");
+      setEmail("")
+     handleClose()
+     setUsers((prevUsers) => {
+      return prevUsers.map((user) => {
+        if (user._id === id) {
+          return {
+            ...user,
+            name: name,
+            email: email,
+          };
+        }
+        return user;
+      });
+    })
+    toast.success("Updated")
+    }).catch((err)=>{
+      toast.error("Not updated")
+    })
+  }
+
+  
+   
  
   useEffect(() => {
-    axios.get("/api/admin/userdetails").then((res) => {
+    axios.get("/api/admin/userdetails/").then((res) => {
       console.log(res.data);
       setUsers(res.data);
     });
@@ -28,10 +66,18 @@ function AdminHome() {
        
         
 }
+const editUser=async(id,name,email)=>{
+  setId(id)
+  setName(name);
+  setEmail(email)
+  setShow(true)
+}
+
+
 
 
   return (
-   
+    <>
     <div>
          <div>
          <FormControl
@@ -65,7 +111,7 @@ function AdminHome() {
             <td>
               {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
               <div class="d-flex gap-5">
-                <a class="btn btn-primary">Edit</a>
+                <a class="btn btn-primary" onClick={()=>editUser(user._id,user.name,user.email)}>Edit</a>
 
                 <a
                   class="delBtn btn btn-danger"
@@ -81,6 +127,50 @@ function AdminHome() {
     </Table>
     </div>
    
+    <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Modal heading</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+        <div className="d-flex justify-content-center align-items-center">
+        
+   
+   <Form onSubmit={submitHandler}>
+   <Form.Group className='my-2' controlId='email'>
+       <Form.Label >
+            Name
+       </Form.Label>
+       <Form.Control type='name' placeholder='Enter Email' value={name} onChange={(e)=>setName(e.target.value)}>
+
+       </Form.Control>
+
+     </Form.Group>
+     <Form.Group className='my-2' controlId='email'>
+       <Form.Label >
+            Email Address
+       </Form.Label>
+       <Form.Control type='email' placeholder='Enter Email' value={email} onChange={(e)=>setEmail(e.target.value)}>
+
+       </Form.Control>
+
+     </Form.Group>
+   
+ 
+     <Button type='submit' variant='primary' className='mt-3'>
+       Edit User
+     </Button>
+    
+   </Form>
+
+        </div>
+
+        </Modal.Body>
+
+      
+      </Modal>
+
+  
+  </>
   );
 }
 

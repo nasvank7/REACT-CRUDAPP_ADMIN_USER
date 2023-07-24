@@ -38,7 +38,8 @@ const AdminLoginScreen = () => {
   }
 
   return (
- <FormContainer>
+    <div>
+        <FormContainer>
     <h1>
         Admin LogIn
     </h1>
@@ -62,12 +63,14 @@ const AdminLoginScreen = () => {
 
       </Form.Group>
    
-      <Button type='button'onClick={adminHandler} variant='primary' className='mt-3'>
+      <Button type='button'onClick={adminHandler} variant='danger' className='mt-3'>
         Sign In
       </Button>
      
     </Form>
  </FormContainer>
+    </div>
+
   )
 }
 

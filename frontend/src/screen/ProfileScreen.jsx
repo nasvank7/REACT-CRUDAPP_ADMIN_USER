@@ -19,6 +19,7 @@ const ProfileScreen = () => {
   const [email,setEmail]=useState('')
   const [password,setPassword]=useState('')
   const [confirmPassword,setConfirmPassword]=useState('')
+ 
   
   const nav=useNavigate()
   const dispatch=useDispatch()
@@ -31,6 +32,13 @@ const ProfileScreen = () => {
   },[userInfo.setName,userInfo.setEmail])
 
  
+  const [file, setProfilePhoto] = useState(null);
+
+  // Handler for profile photo change
+  const handleProfilePhotoChange = (e) => {
+    const file = e.target.files[0];
+    setProfilePhoto(URL.createObjectURL(file));
+  };
   const submitHandler=async(e)=>{
     e.preventDefault()
    if(password !== confirmPassword){
@@ -93,6 +101,22 @@ const ProfileScreen = () => {
         </Form.Control>
 
       </Form.Group>
+   
+    
+      {/* Existing form fields... */}
+      <Form.Group className='my-2' controlId='image'>
+        <Form.Label>Profile Photo</Form.Label>
+        <Form.Control
+          type='file'
+        
+          accept='.png, .jpg, .jpeg'
+          onChange={handleProfilePhotoChange}
+        />
+       <div style={{ width: '10px', height: '10px' }}>
+         <img src={file} alt="" />
+        </div>
+      </Form.Group>
+  
       {isLoading && <Loader/>}
       <Button type='submit' variant='primary' className='mt-3'>
      Update
@@ -100,6 +124,9 @@ const ProfileScreen = () => {
      
     </Form>
  </FormContainer>
+
+
+   
   )
 }
 
