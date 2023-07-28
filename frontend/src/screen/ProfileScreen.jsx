@@ -112,9 +112,9 @@ const ProfileScreen = () => {
           accept='.png, .jpg, .jpeg'
           onChange={handleProfilePhotoChange}
         />
-       <div style={{ width: '10px', height: '10px' }}>
-         <img src={file} alt="" />
-        </div>
+     
+         <img src={file} width="100px" height="100px" alt="" />
+        
       </Form.Group>
   
       {isLoading && <Loader/>}

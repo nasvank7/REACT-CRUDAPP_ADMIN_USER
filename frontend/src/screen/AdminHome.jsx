@@ -6,7 +6,7 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import FormContainer from "../components/FormContainer";
 import {Form} from 'react-bootstrap'
-
+import { useNavigate } from "react-router-dom";
 function AdminHome() {
   const [users, setUsers] = useState([]);
   const [show, setShow] = useState(false);
@@ -16,6 +16,7 @@ function AdminHome() {
   const [searchUser,setSearchTerm]=useState('')
   const [showDelete, setShowDelete] = useState({});
   const handleClose = () => setShow(false);
+  const nav=useNavigate()
   const submitHandler = (e) => {
     e.preventDefault()
     console.log('sdjfjh');
@@ -126,7 +127,7 @@ const editUser=async(id,name,email)=>{
       </tbody>
     </Table>
     </div>
-   
+    <a className="btn btn-warning" onClick={()=>nav('AdminAddUser')}>add user</a>
     <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Modal heading</Modal.Title>

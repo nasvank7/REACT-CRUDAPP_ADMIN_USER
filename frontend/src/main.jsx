@@ -13,6 +13,7 @@ import RegisterScreen from './screen/RegisterScreen.jsx'
 import ProfileScreen from './screen/ProfileScreen.jsx';
 import AdminLoginScreen from './screen/AdminLoginScreen.jsx';
 import AdminHome from './screen/AdminHome.jsx';
+import AdminAddUser from './screen/AdminAddUser.jsx'
 
 const router=createBrowserRouter(
   createRoutesFromElements(
@@ -27,6 +28,7 @@ const router=createBrowserRouter(
       </Route>
       <Route  path='/admin' element={<AdminLoginScreen/>}/>
       <Route  path='/admindash' element={<AdminHome/>}/>
+      <Route path="/adminDash/AdminAddUser" element={<AdminAddUser/>}/>
     </Route>
   )
 )
